@@ -1,0 +1,20 @@
+$TTL    604800
+@       IN     SOA      ns. example.com.br. admin.example.com.br. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@        IN        A          5.5.5.70
+app1        IN        A          5.5.5.10
+app2        IN        A          5.5.5.20
+app3        IN        A          4.4.4.30
+app3        IN        A          5.5.5.30
+app3        IN        A          6.6.6.30
+app4        IN        A          4.4.4.40
+app5        IN        A          5.5.5.50
+app6        IN        A          5.5.5.60
+app7        IN        A          4.4.4.70
+www        IN        CNAME          app2
+ww2        IN        CNAME          app3

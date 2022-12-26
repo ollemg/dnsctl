@@ -1,9 +1,11 @@
 [tool.poetry]
 name = "dnsctl"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Gabriel <gabrielmello808@gmail.com>"]
 packages = [{include = "dnsctl"}]
+repository = "https://github.com/ollemg/dnsctl"
+homepage = "https://github.com/ollemg/dnsctl"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -18,6 +20,7 @@ dynaconf = "^3.1.11"
 ipython = "^8.5.0"
 blue = "^0.9.1"
 bandit = "^1.7.4"
+isort = "^5.11.4"
 
 [tool.poetry.scripts]
 dnsctl = "dnsctl.__main__:cli"

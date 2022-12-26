@@ -1,6 +1,8 @@
-from loguru import logger
-from .config import settings
 from pathlib import Path
+
+from loguru import logger
+
+from .config import settings
 
 path = Path.home().joinpath('.local/share/dnsctl/log')
 format_logger = '<green>{time}</green> | <level>{level}</level> | <blue>{name}:{function}:{line}</blue> - <level>{message}</level>'

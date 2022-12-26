@@ -1,22 +1,21 @@
-import rich_click as click
-from loguru import logger
-from pathlib import Path
-import sys
-import dynaconf
-from ipaddress import IPv4Network, IPv4Address
-from dnsctl.config import settings
 import os
-from jinja2 import PackageLoader, Environment, FileSystemLoader
+import sys
+from ipaddress import IPv4Address, IPv4Network
+from pathlib import Path
+
+import dynaconf
+import rich_click as click
+from jinja2 import Environment, FileSystemLoader, PackageLoader
+from loguru import logger
+
+from dnsctl.config import settings
 
 click.rich_click.USE_MARKDOWN = True
 click.rich_click.SHOW_ARGUMENTS = True
 click.rich_click.GROUP_ARGUMENTS_OPTIONS = True
-# click.rich_click.ERRORS_SUGGESTION = "Try running the '--help' flag for more information."
 logger.remove()
 
 format_logger = '<green>{time}</green> | <level>{level}</level> | <blue>{name}:{function}:{line}</blue> - <level>{message}</level>'
-# format_stderr = '<level>{level}</level> - <level>{message}</level>'
-
 
 @click.group('cli')
 @click.option(
@@ -29,8 +28,9 @@ format_logger = '<green>{time}</green> | <level>{level}</level> | <blue>{name}:{
 def cli(log):
     """
     # dnschanger
-    ## Exemplos:
-    - $ dnsctl failover --link LINK ./domain.yml
+    ### Exemplos:
+    - $ dnsctl failover --link LINK
+    - $ dnsctl view --link LINK
     """
     logger.add(
         sys.stdout,
@@ -46,14 +46,12 @@ def cli(log):
         format=format_logger,
     )
 
-
 @cli.command('version', help='Version tool')
 def version():
-    click.echo('dnschanger 0.5.0')
+    click.echo('dnsctl 0.1.1')
 
 
 @cli.command('view', short_help='View DNS records')
-@click.argument('dns_yml_config', type=click.Path(exists=True, readable=True))
 @click.option(
     '--link',
     '-l',
@@ -63,14 +61,11 @@ def version():
     required=True,
     default='ALL',
 )
-def view(dns_yml_config, link):
+def view(link):
     """
     Visualiza previamente os dados
     """
-    records = read_yaml(dns_yml_config, 'records')
-    domain = read_yaml(dns_yml_config, 'domain')
-    named_filename = read_yaml(dns_yml_config, 'named_file')
-
+    ...
 
 @cli.command('failover', short_help='failover DNS records')
 @click.option(
@@ -92,8 +87,6 @@ def failover(link):
     get_cidr_info = [
         cidr for cidr in settings.cidr if link.upper() in cidr.name
     ]
-    # click.echo(settings.cidr)
-    # click.echo(get_cidr_info)
     cidr = get_cidr_info[0].addr
     records = settings.records
     domain = settings.domain
@@ -102,7 +95,6 @@ def failover(link):
         fp.write(buf)
 
     for record in records:
-        # click.echo(type(record['addr']))
         match record:
             case {'mode': 'failover', 'type': 'A'}:
                 if type(record['addr']) is not str:
@@ -119,7 +111,9 @@ def failover(link):
                         type=record['type'],
                         ip=address[0],
                     )
-                    logger.debug(f'domain: {settings.domain} : {record_template}')
+                    logger.debug(
+                        f'domain: {settings.domain} : {record_template}'
+                    )
                     with named_file.open('a') as f:
                         f.write(f'{record_template}\n')
                 else:
@@ -138,7 +132,7 @@ def failover(link):
                             info=record['info'],
                             ip=ip,
                         )
-                        logger.debug(record_template)
+                        logger.debug(f'domain: {settings.domain} : {record_template}')
                         with named_file.open('a') as f:
                             f.write(f'{record_template}\n')
                 else:
@@ -156,7 +150,7 @@ def failover(link):
                         type=record['type'],
                         ip=record['addr'],
                     )
-                    logger.debug(record_template)
+                    logger.debug(f'domain: {settings.domain} : {record_template}')
                     with named_file.open('a') as f:
                         f.write(f'{record_template}\n')
                 else:
@@ -172,7 +166,7 @@ def failover(link):
                         type=record['type'],
                         ip=record['addr'],
                     )
-                    logger.debug(record_template)
+                    logger.debug(f'domain: {settings.domain} : {record_template}')
                     with named_file.open('a') as f:
                         f.write(f'{record_template}\n')
                 else:

@@ -1,66 +1,66 @@
 ---
-domain: ollemg.com.br
-named_file: ./ollemg.com.br.db
+domain: example.com.br
+named_file: /var/share/bind9/example.com.br.db
 display_info: false
 
 cidr:
-  - name: OI
-    addr: 1.1.1.0/24
+  - name: LINK01
+    addr: 4.4.4.0/24
   
-  - name: VIVO
-    addr: 2.2.2.0/24
+  - name: LINK02
+    addr: 5.5.5.0/24
 
-  - name: CLARO
-    addr: 3.3.3.0/24
+  - name: LINK03
+    addr: 6.6.6.0/24
 
 records:
   - name: '@'
     type: A
-    addr: [ 1.1.1.70, 2.2.2.70, 3.3.3.70 ]
+    addr: [ 4.4.4.70, 5.5.5.70, 6.6.6.70 ]
     mode: failover
     info: Aplicação kibana
 
   - name: app1
     type: A
-    addr: [ 1.1.1.10, 2.2.2.10, 3.3.3.10 ]
+    addr: [ 4.4.4.10, 5.5.5.10, 6.6.6.10 ]
     mode: failover
     reverse: true
     info: Aplicação mailgw
 
   - name: app2
     type: A
-    addr: [ 1.1.1.20, 2.2.2.20, 3.3.3.20 ] 
+    addr: [ 4.4.4.20, 5.5.5.20, 6.6.6.20 ] 
     mode: failover
     reverse: false
     info: Aplicação gitlab
 
   - name: app3
     type: A
-    addr: [ 1.1.1.30, 2.2.2.30, 3.3.3.30 ]
+    addr: [ 4.4.4.30, 5.5.5.30, 6.6.6.30 ]
     mode: roundrobin
     info: Aplicação Nextcloud
 
   - name: app4
     type: A
-    addr: 1.1.1.40
+    addr: 4.4.4.40
     mode: standalone
     info: Aplicação Guacamole
 
   - name: app5
     type: A
-    addr: [ 1.1.1.50, 2.2.2.50, 3.3.3.50 ]
+    addr: [ 4.4.4.50, 5.5.5.50, 6.6.6.50 ]
     mode: failover
     info: Aplicação CRM
 
   - name: app6
     type: A
-    addr: [ 1.1.1.60, 2.2.2.60, 3.3.3.60 ]
+    addr: [ 4.4.4.60, 5.5.5.60, 6.6.6.60 ]
     mode: failover
     info: Aplicação APIGW
 
   - name: app7
     type: A
-    addr: 1.1.1.70
+    addr: 4.4.4.70
     mode: standalone
     info: Aplicação proxy
 
