@@ -1,0 +1,4 @@
+[system]
+log = 'info'
+
+[zones]

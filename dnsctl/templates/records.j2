@@ -1,0 +1,5 @@
+{%- if display_info -%}
+{{ name }}        IN        {{ type }}          {{ ip }} ;; info: {{ info }} mode: {{ mode }}
+{% else -%}
+{{ name }}        IN        {{ type }}          {{ ip }}
+{%- endif -%}

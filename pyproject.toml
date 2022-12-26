@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "dnsctl"
+version = "0.1.0"
+description = ""
+authors = ["Gabriel <gabrielmello808@gmail.com>"]
+packages = [{include = "dnsctl"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Jinja2 = "^3.1.2"
+click = "^8.1.3"
+rich-click = "^1.4"
+loguru = "^0.6.0"
+pathlib2 = "^2.3.7"
+dynaconf = "^3.1.11"
+
+[tool.poetry.dev-dependencies]
+ipython = "^8.5.0"
+blue = "^0.9.1"
+bandit = "^1.7.4"
+
+[tool.poetry.scripts]
+dnsctl = "dnsctl.__main__:cli"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
